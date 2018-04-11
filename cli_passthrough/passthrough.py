@@ -1,15 +1,10 @@
 import errno
 import os
 import pty
-import shutil
 import subprocess
 import sys
-import time
-from distutils.dir_util import copy_tree
-from distutils.errors import DistutilsFileError
 from select import select
 from subprocess import Popen
-from threading import Thread
 
 import click
 
