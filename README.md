@@ -12,7 +12,6 @@ This project was motivated by the desire to have a cli-passthrough that does all
 6. FORMATTING PRESERVED: Preserve ANSI escape sequences so most things are still formatted as if not run through this passthrough.
 7. INTERACTIVE, i.e. allow prompting for input.
 
-os.system
 
 |                              | 1 | 2 | 3 | 4 | 5 | 6 | 7 | note |
 |------------------------------|---|---|---|---|---|---|---|------|
