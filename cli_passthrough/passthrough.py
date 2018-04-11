@@ -15,9 +15,13 @@ import click
 
 import cli_passthrough.utils as utils
 
-def passthrough(cmd=None):
+def passthrough(cmd=None, interactive=False):
     masters, slaves = zip(pty.openpty(), pty.openpty())
-    cmd = cmd.split()
+    if interactive: # FIX: This has some issues and doesn't work all the way, thus it's not the default.
+        cmd = ["/bin/bash", "-i", "-c"] + cmd.split()
+    else:
+        cmd = cmd.split()
+
     with Popen(cmd, stdin=slaves[0], stdout=slaves[0], stderr=slaves[1]) as p:
         for fd in slaves:
             os.close(fd) # no input
