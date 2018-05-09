@@ -1,5 +1,7 @@
 # README
 
+Install with `pip install cli-passthrough`.
+
 This project provides an entry point `cli-passthrough` in the terminal that accepts any amount of parameters, and runs those parameters as it's own command. Except in a few special cases, this will output to the terminal exactly what the command would have, including any formatting done with escape sequences. Both the combined stdout and stderr are logged, with order preserved, in `logs/history.log`, and the stderr by itself is logged in `/logs/stderr.log`. These log files are written to in realtime. The output to the terminal is also in realtime.
 
 This project was motivated by making a wrapper on another application which needed to be used over the CLI. I wanted to also use the wrapper from the CLI as well. I wanted to see the output of the program I was invoking in real-time, in the same formatting, and log everything. In other words, I wanted the following:
@@ -26,7 +28,7 @@ This project was motivated by making a wrapper on another application which need
 
 This implementation of subprocess.popen + pty currently has the following limitations:
 
-1. It doesn't run *every* command, just most. `ssh` doesn't work :/
+1. It doesn't run *every* command. Commands that need input from the user do not work, such as `ssh` or `ipython`.
 
 1. It makes assumptions about the terminal size. It would be better if it detected the terminal the python is ran in, and use the same dimensions.
 
