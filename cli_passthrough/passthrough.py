@@ -13,7 +13,7 @@ import cli_passthrough.utils as utils
 def passthrough(cmd=None, interactive=False):
     '''Largely found in https://stackoverflow.com/a/31953436'''
     masters, slaves = zip(pty.openpty(), pty.openpty())
-    if interactive: # FIX: This has some issues and doesn't work all the way, thus it's not the default.
+    if interactive:
         cmd = ["/bin/bash", "-i", "-c"] + cmd.split()
     else:
         cmd = cmd.split()

@@ -19,7 +19,7 @@ setup(
     name='CLI-passthrough',
     packages=find_packages(),
     url='https://github.com/terminal-labs/cli-passthrough',
-    version='0.1.1',
+    version='0.1.2',
     classifiers=[
         'Environment :: Console',
         'Intended Audience :: Developers',

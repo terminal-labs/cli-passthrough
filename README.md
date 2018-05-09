@@ -10,17 +10,16 @@ This project was motivated by making a wrapper on another application which need
 4. REALTIME OUTPUT: Output to the screen in realtime, i.e. don't wait for the command to exit before dumping to the screen.
 5. EXIT STATUS: Capture exit code
 6. FORMATTING PRESERVED: Preserve ANSI escape sequences so most things are still formatted as if not run through this passthrough.
-7. INTERACTIVE, i.e. allow prompting for input.
 
 
-|                              | 1 | 2 | 3 | 4 | 5 | 6   | 7 | note |
-|------------------------------|---|---|---|---|---|-----|---|------|
-| os.system                    | Y | N | Y | Y | Y | Y   | Y | Doesn't capture output at all |
-| os.popen                     | N | N | Y | N | N | Y   | N | Deprecated & obsolete |
-| os.exec*                     | Y | N | - | N | N | N   | N | Really not the intended use |
-| pexpect                      | Y | N | Y | Y | Y | Y   | Y | Bad logging |
-| subprocess.popen + threads   | Y | Y | Y | N | Y | Y/N | N | Threads just enable separate logging, not realtime output |
-| subprocess.popen + pty       | Y | Y | Y | Y | Y | Y   | Y | We got it! |
+|                              | 1 | 2 | 3 | 4 | 5 | 6   | note |
+|------------------------------|---|---|---|---|---|-----|------|
+| os.system                    | Y | N | Y | Y | Y | Y   | Doesn't capture output at all |
+| os.popen                     | N | N | Y | N | N | Y   | Deprecated & obsolete |
+| os.exec*                     | Y | N | - | N | N | N   | Really not the intended use |
+| pexpect                      | Y | N | Y | Y | Y | Y   | Bad logging |
+| subprocess.popen + threads   | Y | Y | Y | N | Y | Y/N | Threads just enable separate logging, not realtime output |
+| subprocess.popen + pty       | Y | Y | Y | Y | Y | Y   | We got it! |
 
 
 ## Known Limitations
