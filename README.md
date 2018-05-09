@@ -13,12 +13,11 @@ This project was motivated by the desire to have a cli-passthrough that does all
 7. INTERACTIVE, i.e. allow prompting for input.
 
 
-|                              | 1 | 2 | 3 | 4 | 5 | 6 | 7 | note |
-|------------------------------|---|---|---|---|---|---|---|------|
-| os.system                    | Y | N | Y | Y | Y | Y | Y | Doesn't capture output at all |
-| os.popen                     | N | N | Y | N | N | Y | N | Deprecated & obsolete |
-| os.exec*                     | Y | N | - | N | N | N | N | Really not the intended use |
-| pexpect                      | Y | N | Y | Y | Y | Y | Y |     |
-| stdbuf                       |   |   |   |   | Y | Y |   |     |
-| subprocess.popen + threads   | Y | Y | Y | N | Y |   | N |     |
-| subprocess.popen + pty       | Y | Y | Y | Y | Y | Y | Y |     |
+|                              | 1 | 2 | 3 | 4 | 5 | 6   | 7 | note |
+|------------------------------|---|---|---|---|---|-----|---|------|
+| os.system                    | Y | N | Y | Y | Y | Y   | Y | Doesn't capture output at all |
+| os.popen                     | N | N | Y | N | N | Y   | N | Deprecated & obsolete |
+| os.exec*                     | Y | N | - | N | N | N   | N | Really not the intended use |
+| pexpect                      | Y | N | Y | Y | Y | Y   | Y |     |
+| subprocess.popen + threads   | Y | Y | Y | N | Y | Y/N | N |     |
+| subprocess.popen + pty       | Y | Y | Y | Y | Y | Y   | Y |     |
