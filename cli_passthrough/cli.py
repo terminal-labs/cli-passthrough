@@ -18,19 +18,17 @@ CONTEXT_SETTINGS = {
 @click.command(context_settings=CONTEXT_SETTINGS)
 @click.option('-i', '--interactive', is_flag=True,
               help='Prefixes command with "/bin/bash -i -c", '
-              'effectively sourceing the .bashrc file. '
+              'effectively sourcing the .bashrc file. '
               'This may use any aliases set in your current env.')
 @click.version_option(prog_name='cli-passthrough', version=version)
 @click.pass_context
 def cli(ctx, interactive):
     '''Entry point
     '''
-    utils.write_to_log('\nNEW CMD')
-    utils.write_to_log(' '.join(sys.argv))
+    utils.write_to_log('\nNEW CMD = {}'.format(' '.join(sys.argv)))
+    utils.write_to_log('\nNEW CMD = {}'.format(' '.join(sys.argv)), 'stderr')
 
-    utils.write_to_log('\nNEW CMD', 'stderr')
-    utils.write_to_log(' '.join(sys.argv), 'stderr')
-
-    passthrough.passthrough(' '.join(ctx.args), interactive)
+    exit_status = passthrough.passthrough(' '.join(ctx.args), interactive)
+    sys.exit(exit_status)
 
 main = cli
