@@ -20,7 +20,7 @@ This project was motivated by making a wrapper on another application which need
 | os.popen                     | N | N | Y | N | N | Y   | Deprecated & obsolete |
 | os.exec*                     | Y | N | - | N | N | N   | Really not the intended use |
 | pexpect                      | Y | N | Y | Y | Y | Y   | Bad logging |
-| subprocess.popen + threads   | Y | Y | Y | N | Y | Y/N | Threads just enable separate logging, not realtime output |
+| subprocess.popen + threads   | Y | Y | Y | N | Y | Y/N | Doesn't have real-time output because it's often dependent on buffer flushes of blocks. |
 | subprocess.popen + pty       | Y | Y | Y | Y | Y | Y   | We got it! |
 
 
