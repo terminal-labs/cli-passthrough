@@ -1,17 +1,14 @@
 import errno
 import os
 import pty
-import subprocess
 import sys
 from select import select
 from subprocess import Popen
 
-import click
-
-import cli_passthrough.utils as utils
+from .utils import echo
 
 
-def passthrough(cmd=None, interactive=False):
+def cli_passthrough(cmd=None, interactive=False):
     """Largely found in https://stackoverflow.com/a/31953436"""
     masters, slaves = zip(pty.openpty(), pty.openpty())
     if interactive:
@@ -39,9 +36,9 @@ def passthrough(cmd=None, interactive=False):
                         del readable[fd]
                     else:
                         if fd == masters[0]:  # We caught stdout
-                            utils.echo(data.rstrip())
+                            echo(data.rstrip())
                         else:  # We caught stderr
-                            utils.echo(data.rstrip(), err=True)
+                            echo(data.rstrip(), err=True)
                         readable[fd].flush()
     for fd in masters:
         os.close(fd)

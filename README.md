@@ -1,5 +1,42 @@
 # README
 
+## How to Use
+
+
+From the terminal:
+
+```bash
+$ cli-passthrough echo 'hi'
+hi
+$ echo 'hi'
+hi
+$ cli-passthrough python --error
+Unknown option: --
+usage: python [option] ... [-c cmd | -m mod | file | -] [arg] ...
+Try `python -h' for more information.
+$ python --error
+Unknown option: --
+usage: python [option] ... [-c cmd | -m mod | file | -] [arg] ...
+Try `python -h' for more information.
+```
+
+From Python (where this really shines):
+```ipython
+In [1]: from cli_passthrough import cli_passthrough
+
+In [2]: cli_passthrough("echo 'hi'")
+hi
+Out[2]: 0
+
+In [3]: cli_passthrough("python --error")
+Unknown option: --
+usage: python [option] ... [-c cmd | -m mod | file | -] [arg] ...
+Try `python -h' for more information.
+Out[3]: 2
+
+```
+
+
 Install with `pip install cli-passthrough`.
 
 This project provides an entry point `cli-passthrough` in the terminal that accepts any amount of parameters, and runs those parameters as it's own command. Except in a few special cases, this will output to the terminal exactly what the command would have, including any formatting done with escape sequences. Both the combined stdout and stderr are logged, with order preserved, in `logs/history.log`, and the stderr by itself is logged in `/logs/stderr.log`. These log files are written to in realtime. The output to the terminal is also in realtime.

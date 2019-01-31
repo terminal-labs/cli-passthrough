@@ -1,17 +1,16 @@
-import os
 import pkg_resources
 import sys
 
 import click
 
-import cli_passthrough.passthrough as passthrough
-import cli_passthrough.utils as utils
+from . import cli_passthrough
+from .utils import write_to_log
 
 version = pkg_resources.get_distribution("cli-passthrough").version
-
 CONTEXT_SETTINGS = {"ignore_unknown_options": True, "allow_extra_args": True}
 
-### CLI entry point
+
+# CLI entry point
 @click.command(context_settings=CONTEXT_SETTINGS)
 @click.option(
     "-i",
@@ -26,10 +25,10 @@ CONTEXT_SETTINGS = {"ignore_unknown_options": True, "allow_extra_args": True}
 def cli(ctx, interactive):
     """Entry point
     """
-    utils.write_to_log("\nNEW CMD = {}".format(" ".join(sys.argv)))
-    utils.write_to_log("\nNEW CMD = {}".format(" ".join(sys.argv)), "stderr")
+    write_to_log("\nNEW CMD = {}".format(" ".join(sys.argv)))
+    write_to_log("\nNEW CMD = {}".format(" ".join(sys.argv)), "stderr")
 
-    exit_status = passthrough.passthrough(" ".join(ctx.args), interactive)
+    exit_status = cli_passthrough(" ".join(ctx.args), interactive)
     sys.exit(exit_status)
 
 
