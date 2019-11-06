@@ -1,7 +1,7 @@
-import pkg_resources
 import sys
 
 import click
+import pkg_resources
 
 from . import cli_passthrough
 from .utils import write_to_log
