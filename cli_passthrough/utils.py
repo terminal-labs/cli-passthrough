@@ -6,10 +6,10 @@ import click
 def echo(msg, err=None):
     if err:
         write_to_log(msg, "stderr")
-        click.echo(msg, err=err)
+        click.echo(msg, nl=False, err=err)
     else:
         write_to_log(msg)
-        click.echo(msg)
+        click.echo(msg, nl=False)
 
 
 def write_to_log(data=None, file_name=None):
