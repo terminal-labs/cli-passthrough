@@ -1,8 +1,31 @@
-dist
-build
-flymd*
-*.pyc
-*.pyo
-*.egg-info
+syntax: glob
+
+## patterns
+*.orig
+*.tgz
+*.swp
+*.swo
 *~
-logs
+*.DS_Store*
+*.vagrant*
+*.pem
+*.pub
+*.log
+*.pyc
+*.#*
+*#
+*.egg-info
+*flymd*
+
+## paths
+dist
+activate.sh
+env.sh
+digitalocean.env.sh
+aws.env.sh
+docs/_build
+srv/salt/ssh_keys
+rambo/saltstack
+.tmp
+**/auth/keys
+**/licenses
