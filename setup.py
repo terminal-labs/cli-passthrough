@@ -22,6 +22,7 @@ setup(
     entry_points="""
         [console_scripts]
         cli-passthrough=cli_passthrough.cli:main
+        clipassthrough=cli_passthrough.cli:main
      """,
     extras_require={"dev": dev_requires},
     include_package_data=True,
