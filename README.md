@@ -23,7 +23,7 @@ cat: invalid option -- 'a'
 Try 'cat --help' for more information.
 ```
 
-From Python:
+With Python, we also get the retcode returned:
 ```ipython
 In [1]: from cli_passthrough import cli_passthrough
 
