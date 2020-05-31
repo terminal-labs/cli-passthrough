@@ -11,18 +11,16 @@ Install with `pip install cli-passthrough` / `pip install -e .` if you have this
 From the terminal:
 
 ```bash
-$ cli-passthrough echo 'hi'
+$ cli-passthrough echo hi
 hi
-$ echo 'hi'
+$ echo hi
 hi
-$ cli-passthrough python --error
-Unknown option: --
-usage: python [option] ... [-c cmd | -m mod | file | -] [arg] ...
-Try `python -h' for more information.
-$ python --error
-Unknown option: --
-usage: python [option] ... [-c cmd | -m mod | file | -] [arg] ...
-Try `python -h' for more information.
+$ cli-passthrough cat -asdf
+cat: invalid option -- 'a'
+Try 'cat --help' for more information.
+$ cat -asdf
+cat: invalid option -- 'a'
+Try 'cat --help' for more information.
 ```
 
 From Python:
@@ -33,18 +31,18 @@ In [2]: cli_passthrough("echo 'hi'")
 hi
 Out[2]: 0
 
-In [3]: cli_passthrough("python --error")
-Unknown option: --
-usage: python [option] ... [-c cmd | -m mod | file | -] [arg] ...
-Try `python -h' for more information.
-Out[3]: 2
-
+In [3]: cli_passthrough("cat -asdf")
+cat: invalid option -- 'a'
+Try 'cat --help' for more information.
+Out[3]: 1
 ```
+
+This should also handle some commands that provide interactivity, like `ssh`, `ipython`, and `passwd`.
 
 ## What does it do?
 
 
-This project provides an entry point `cli-passthrough` in the terminal that accepts any amount of parameters, and runs those parameters as it's own command. Except in a few special cases, this will output to the terminal exactly what the command would have, including any formatting done with escape sequences. Both the combined stdout and stderr are logged, with order preserved, in `logs/history.log`, and the stderr by itself is logged in `/logs/stderr.log`. These log files are written to in realtime. The output to the terminal is also in realtime. The original intent was to dump all output back to the screen, while saving both stdout and stderr. Future work will be to return those outputs to Python as well.
+This project provides an entry point `cli-passthrough` in the terminal that accepts any amount of parameters, and runs those parameters as it's own command. Except in a few special cases, this will output to the terminal exactly what the command would have, including any formatting done with escape sequences. Both the combined stdout and stderr are logged, with order preserved, in `logs/history.log`, and the stderr by itself is logged in `logs/stderr.log`. These log files are written to in realtime. The output to the terminal is also in realtime. The original intent was to dump all output back to the screen, while saving both stdout and stderr. Future work will be to return those outputs to Python as well.
 
 This project was motivated by making a wrapper on another application which needed to be used over the CLI. I wanted to also use the wrapper from the CLI as well. I wanted to see the output of the program I was invoking in real-time, in the same formatting, and log everything. In other words, I wanted the following:
 
@@ -70,10 +68,8 @@ This project was motivated by making a wrapper on another application which need
 
 This implementation of subprocess.popen + pty currently has the following limitations:
 
-1. It doesn't run *every* command. Commands that need input from the user do not work, such as `ssh` or `ipython`.
+1. Not tested and probably doesn't work on Windows.
 
-1. It makes assumptions about the terminal size. It would be better if it detected the terminal the python is ran in, and use the same dimensions.
+1. It doesn't run *every* command. E.g. Commands that repeatedly modify the display like `top` and `glances` aren't handled well.
 
-This is very much largely adapted (copied) from [this SO post](https://stackoverflow.com/a/31953436). I just wrapped it up into an importable function, gave it a CLI itself, and made basic logging to illustrate the point. Feel free to copy/paste/tweek it yourself.
-
-**If you find something better** please let me know! I'd be more than happy to upgrade or replace this. This is simply the best I've found so far.
+This started with [this SO post](https://stackoverflow.com/a/31953436). It now has a few improvements, but the credit for the jumping off point is definitely that post. Thank you to all contributors.
