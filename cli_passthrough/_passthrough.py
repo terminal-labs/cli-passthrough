@@ -1,16 +1,33 @@
 import errno
+import fcntl
 import os
 import pty
+import shutil
+import struct
 import sys
+import termios
+from itertools import chain
 from select import select
 from subprocess import Popen
 
 from .utils import echo
 
 
+_COLUMNS, _ROWS, = shutil.get_terminal_size(fallback=(80, 20))
+
+
+def _set_size(fd):
+    """Found at: https://stackoverflow.com/a/6420070"""
+    size = struct.pack("HHHH", _ROWS, _COLUMNS, 0, 0)
+    fcntl.ioctl(fd, termios.TIOCSWINSZ, size)
+
+
 def cli_passthrough(cmd=None, interactive=False):
     """Largely found in https://stackoverflow.com/a/31953436"""
     masters, slaves = zip(pty.openpty(), pty.openpty())
+    for fd in chain(masters, slaves):
+        _set_size(fd)
+
     if interactive:
         cmd = ["/bin/bash", "-i", "-c"] + cmd.split()
     else:
