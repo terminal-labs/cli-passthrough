@@ -17,12 +17,16 @@ setup(
         "Intended Audience :: Developers",
         "License :: OSI Approved :: BSD License",
         "Topic :: Utilities",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     description="Importable CLI-passthrough with bells and whistles.",
     entry_points="""
         [console_scripts]
         cli-passthrough=cli_passthrough.cli:main
-        clipassthrough=cli_passthrough.cli:main
      """,
     extras_require={"dev": dev_requires},
     include_package_data=True,
