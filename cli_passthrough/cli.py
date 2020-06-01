@@ -4,7 +4,6 @@ import click
 import pkg_resources
 
 from . import cli_passthrough
-from .utils import write_to_log
 
 version = pkg_resources.get_distribution("cli-passthrough").version
 CONTEXT_SETTINGS = {"ignore_unknown_options": True, "allow_extra_args": True}
@@ -20,15 +19,19 @@ CONTEXT_SETTINGS = {"ignore_unknown_options": True, "allow_extra_args": True}
     "effectively sourcing the .bashrc file. "
     "This may use any aliases set in your current env.",
 )
+@click.option(
+    "-s",
+    "--silent",
+    is_flag=True,
+    help="Supress stdout and stderr. This will only remove display coming from stdout. "
+    "Some commands may still alter the display.",
+)
 @click.version_option(prog_name="cli-passthrough", version=version)
 @click.pass_context
-def cli(ctx, interactive):
+def cli(ctx, interactive, silent):
     """Entry point
     """
-    write_to_log("\nNEW CMD = {}".format(" ".join(sys.argv)))
-    write_to_log("\nNEW CMD = {}".format(" ".join(sys.argv)), "stderr")
-
-    exit_status = cli_passthrough(" ".join(ctx.args), interactive)
+    exit_status = cli_passthrough(" ".join(ctx.args), interactive, silent)
     sys.exit(exit_status)
 
 
