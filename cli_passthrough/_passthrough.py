@@ -10,7 +10,8 @@ from itertools import chain
 from select import select
 from subprocess import Popen
 
-from .utils import echo
+from cli_passthrough.utils import echo
+from cli_passthrough.utils import write_to_log
 
 
 _COLUMNS, _ROWS, = shutil.get_terminal_size(fallback=(80, 20))
@@ -22,16 +23,22 @@ def _set_size(fd):
     fcntl.ioctl(fd, termios.TIOCSWINSZ, size)
 
 
-def cli_passthrough(cmd=None, interactive=False):
+def cli_passthrough(cmd=None, interactive=False, silent=False):
     """Largely found in https://stackoverflow.com/a/31953436"""
-    masters, slaves = zip(pty.openpty(), pty.openpty())
-    for fd in chain(masters, slaves):
-        _set_size(fd)
+    write_to_log(f"NEW_CMD={cmd}", "stderr.log")
+    write_to_log(
+        f"CMD_PARAMS: interactive={interactive}, silent={silent}", "stderr.log"
+    )
 
     if interactive:
         cmd = ["/bin/bash", "-i", "-c"] + cmd.split()
     else:
         cmd = cmd.split()
+
+    masters, slaves = zip(pty.openpty(), pty.openpty())
+    for fd in chain(masters, slaves):
+        _set_size(fd)
+
     with Popen(cmd, stdin=sys.stdin, stdout=slaves[0], stderr=slaves[1]) as p:
         for fd in slaves:
             os.close(fd)  # no input
@@ -52,9 +59,9 @@ def cli_passthrough(cmd=None, interactive=False):
                         del readable[fd]
                     else:
                         if fd == masters[0]:  # We caught stdout
-                            echo(data)
+                            echo(data, silent=silent)
                         else:  # We caught stderr
-                            echo(data, err=True)
+                            echo(data, err=True, silent=silent)
                         readable[fd].flush()
     for fd in masters:
         os.close(fd)
